@@ -17,6 +17,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '21'
+          distribution: 'temurin' # 'temurin' est une distribution populaire
 
       - name: Build with Maven
         run: mvn clean install
