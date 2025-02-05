@@ -17,10 +17,18 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '21'
-          distribution: 'temurin' # 'temurin' est une distribution populaire
+          distribution: 'temurin'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: List directories
+        run: ls -la
 
-      - name: Run tests
-        run: mvn test
+      - name: Build each microservice
+        run: |
+          for dir in */; do
+            if [ -f "$dir/pom.xml" ]; then
+              echo "Building $dir"
+              mvn -f "$dir/pom.xml" clean install
+            else
+              echo "No pom.xml found in $dir, skipping..."
+            fi
+          done
